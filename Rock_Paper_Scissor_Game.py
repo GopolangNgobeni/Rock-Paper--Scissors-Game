@@ -3,6 +3,7 @@ import sys
 from termcolor import colored
 
 def select_move():
+    
     """
     Gets the input move from the player.
     """
@@ -13,9 +14,10 @@ def select_move():
             print(colored('Goodbye..', 'light_red'))
             sys.exit()
         elif player_move == '' or player_move not in moves:
-            print(colored('Invalid input, Please select (r)ock , (p)aper , (s)cissors , (q)uit','red'))
+            print(colored('Invalid input, Please select (r)ock , (p)aper , (s)cissors , (q)uit','red'))     
         else:
             return moves,player_move
+
 
 def player_moves(player_move):
     """
@@ -29,6 +31,7 @@ def player_moves(player_move):
         print(colored('\nYou chose SCISSORS','red')) 
     return player_move        
 
+
 def computer_moves():
     """
     Generate a random move for the computer.
@@ -41,6 +44,7 @@ def computer_moves():
     elif computer_move == 's':
         print(colored('\nVersus SCISSORS','blue'))         
     return computer_move   
+
 
 def compare_moves(player_move, computer_move,ties, wins, losses):
     """
@@ -61,6 +65,7 @@ def compare_moves(player_move, computer_move,ties, wins, losses):
          losses += 1     
     return ties,wins, losses
 
+
 def print_game_info(ties,wins,losses):
     """
     Print game information, including rules and current statistics.
@@ -69,7 +74,15 @@ def print_game_info(ties,wins,losses):
     print(colored('Paper covers Rock, Rock crushes Scissors and Scissors cuts Paper','yellow'))
     print(colored('Please select (r)ock , (p)aper , (s)cissors , (q)uit','magenta'))
     print(colored(f'ties: {ties}, wins: {wins}, losses: {losses}','magenta'))
-        
+    
+
+def play_again():
+    player_input = input(colored('\n\nWould you like to play the Game again?? (Y for Yes and N for No): ','green'))
+    if player_input ==  'Y'.lower():
+        run_game()
+    elif player_input ==  'N'.lower():
+        sys.exit()              
+    
 def run_game():
     """
     Run the Rock, Paper, Scissors game.
@@ -83,6 +96,14 @@ def run_game():
         player_moves(player_move)
         computer_move = computer_moves()
         ties,wins,losses = compare_moves(player_move, computer_move, ties,wins, losses)
-
+        if wins == 5:
+           print(colored(f"Yeey!!! You have {wins} Wins....<<<<<<GAME OVER YOU WIN!!!..>>>>>>>","red"))
+           break
+        elif losses == 5:
+           print(colored(f"Sorry You have {losses} losses... <<<<<<<<<GAME OVER COMPUTER WINS...>>>>>>>>>", "blue"))
+           break    
+    play_again() 
+    
+        
 if __name__ == '__main__':
       run_game()
